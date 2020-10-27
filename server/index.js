@@ -3,7 +3,7 @@ const path = require('path');
 const morgan = require('morgan');
 const Bundler = require('parcel-bundler');
 
-const { buildStart, buildEnd } = require('./utils/index.js');
+const { buildStart, buildEnd } = require('./utils');
 
 const app = express();
 
@@ -26,7 +26,7 @@ const options = { watch: true };
 const bundler = new Bundler(entryFiles, options);
 
 // mounts the router
-const route = require('./routes/route');
+const route = require('./routes/resources');
 app.use('/resources', route);
 
 // bundler middleware, mount last

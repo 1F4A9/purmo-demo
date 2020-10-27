@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = {
   buildEnd: function () {
     console.log(' ');
@@ -22,5 +25,12 @@ module.exports = {
 
     // cli whitespace
     console.log(' ');
+  },
+  fetchLocalDatabase: function () {
+    return fs.readFileSync(path.join(__dirname, '../', '/database/data.json'), (err, data) => {
+      if (err) return err;
+
+      return JSON.parse(data);
+    });
   }
 };
