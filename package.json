@@ -1,0 +1,20 @@
+{
+  "name": "purmo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mockup.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "express": "^4.17.1",
+    "parcel-bundler": "^1.12.4"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
