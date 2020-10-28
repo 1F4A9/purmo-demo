@@ -6,25 +6,163 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="./script.js" defer></script>
   <script src="./main.js" defer></script>
-  <title>purmo</title>
+  <link href="styles/style.css" rel="stylesheet">
+  <title>Purmo maddafakkor</title>
 </head>
 
 <body>
-  <h1>h1. Bootstrap heading</h1>
-  <select class="custom-select">
-    <option selected>Open this select menu</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-  </select>
+  <h1 class="text-muted h1">Declaration of performance</h1>
+  <h2 class="h2">Choose a radiator</h2>
+  <h3 class="h3">Using the article number (ITEM) ...</h3>
+  <div class="app-content">
+    <form method="post" novalidate="novalidate">
+      <div class="form-group">
+        <label class="label" for="item-number">Item number (16 or 20 digit number)</label>
+        <input type="text" class="form-control" id="item-number" name="item-number" maxlength="20"
+          placeholder="Enter the number ...">
+      </div>
+      <div class="action">
+        <button type="button" class="btn btn-primary" id="button-check-item-number">Confirm the entry</button>
+      </div>
+    </form>
 
-  <select class="select__category">
+    <h3 class="h3">... or find the radiator you want below:</h3>
+
+
+    <form name="dop-select-number-form" id="dop-select-number-form" method="post" novalidate="novalidate">
+
+      <div class="form-group">
+        <label class="label" for="category">Product group</label>
+        <select id="category" name="category" class="form-control form-control-lg select__category">
+          <option value="test">Select the product group ...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="category">Radiator model</label>
+        <select id="category" name="category" class="form-control form-control-lg select__product" disabled="disabled">
+          <option value="test">Choose a model ...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="category">Radiator type</label>
+        <select id="category" name="category" class="form-control form-control-lg select__type" disabled="disabled">
+          <option value="test">Choose the type ...</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="col-md">
+          <div class="form-group">
+            <label class="label" for="height">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Radiator height</font>
+              </font>
+            </label>
+            <select name="height" id="height" class="form-control form-control-lg" disabled="disabled">
+              <option value="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Choose the radiator height ...</font>
+                </font>
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <label class="label" for="length">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Radiator length</font>
+              </font>
+            </label>
+            <select name="length" id="length" class="form-control form-control-lg" disabled="disabled">
+              <option value="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Choose the radiator length ...</font>
+                </font>
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+  <!-- <div class="row input-group">
+    <div class="col-md-8">
+      <select class="custom-select">
+        <option selected>Select the product group ...</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row input-group">
+    <div class="col-md-8">
+      <select class="custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row input-group">
+    <div class="col-md-8">
+      <select class="custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row input-group mb-3">
+    <div class="col-md-8">
+      <select class="custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row input-group ">
+    <div class="col-md-4">
+      <select class="custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select class="custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+  </div> -->
+
+
+  <!-- <select class="select__category">
     <option value="test">test</option>
   </select>
   ​
   <select class="select__product" disabled>
     <option value="test">test</option>
-  </select>
+  </select> -->
 </body>
 
 </html>
