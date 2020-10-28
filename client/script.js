@@ -1,5 +1,12 @@
 import axios from "axios";
 
+// ****************** available endpoints *************************
+// axios.get('/resources')
+// axios.get('/resources/products/3')
+// axios.get('/resources/types/1')
+// axios.get('/resources/heights/1')
+// axios.get('/resources/lengths/1')
+
 const selectCategory = document.querySelector(".select__category");
 const selectProduct = document.querySelector(".select__product");
 const selectType = document.querySelector(".select__type");
