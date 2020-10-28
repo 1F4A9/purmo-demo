@@ -33,7 +33,7 @@ body {
   .app-content {
     float: left;
     width: 100%;
-    background-color: rgb(255, 226, 226);
+    /* background-color: rgb(255, 225, 225); */
   }
 }
 
