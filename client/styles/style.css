@@ -37,6 +37,10 @@ body {
   }
 }
 
+.hide {
+  display: none;
+}
+
 /* @media (min-width: 600px) {
   .form-group .label {
     position: absolute;

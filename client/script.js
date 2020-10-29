@@ -1,182 +1,106 @@
 import axios from "axios";
 
-// ****************** available endpoints *************************
-// axios.get('/resources')
-// axios.get('/resources/products/3')
-// axios.get('/resources/types/1')
-// axios.get('/resources/heights/1')
-// axios.get('/resources/lengths/1')
+const form = document.querySelector('[name="dop-select-number-form"]');
+const selects = form.querySelectorAll('.form-control-lg');
 
-const selectCategory = document.querySelector(".select__category");
-const selectProduct = document.querySelector(".select__product");
-const selectType = document.querySelector(".select__type");
+// fetches mandatory data
+pageInitializer();
 
-// axios.get('/resources')
-//   .then(res => console.log(res.data));
+form.addEventListener('change', HandleSelectChange);
 
-const config = {
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-};
+function HandleSelectChange(e) {
+  // if it's the last select, it won't run this function.
+  if (e.target.name === 'lengths') return;
 
-let categoryId;
-let productId;
+  const currentSelect = e.target;
+  const nextSelect = getNextSelectSibling(currentSelect);
+  const endpoint = nextSelect.name;
+  const id = currentSelect.value;
 
-axios.get('/resources/categories')
-  .then(res => res.data)
-  .then(data => {
-    data.forEach((radiator) => {
-      const option = document.createElement("option");
-      option.setAttribute("value", radiator.categoryid);
-      option.textContent = radiator.name;
-      selectCategory.appendChild(option);
-    });
-  })
+  removeDisabledAttributeFrom(nextSelect);
+  revertIfDefaultOptionIsChosen(currentSelect);
 
-selectCategory.addEventListener("change", (e) => {
-  selectProduct.removeAttribute("disabled");
+  // if default option is chosen, won't call axios
+  if (currentSelect.value === 'default') return;
 
-  while (selectProduct.firstChild) {
-    selectProduct.removeChild(selectProduct.firstChild);
+  axios.get(`/resources/${endpoint}/${id}`)
+    .then(res => createOptionElements(res.data, nextSelect))
+    .catch(err => console.log(err));
+}
+
+function revertIfDefaultOptionIsChosen(currentSelect) {
+  if (currentSelect.value !== 'default') return;
+
+  let selectedIndex = null;
+  for (let i = 0; i < selects.length; i++) {
+    if (selects[i].id === currentSelect.id) {
+      selectedIndex = i;
+    }
+
+    if (selectedIndex !== null && i > selectedIndex) {
+      clearEveryOptionExceptDefault(selects[i]);
+      selects[i].disabled = true;
+    }
+  }
+}
+
+function clearEveryOptionExceptDefault(select) {
+  const defaultOption = select.querySelector('[value="default"]');
+  select.innerHTML = '';
+  select.appendChild(defaultOption);
+}
+
+function getNextSelectSibling(currentSelect) {
+  // runs within the column of selects
+  if (currentSelect.parentElement.parentElement.className !== 'col-md') {
+    let nextSelect = currentSelect.parentElement.nextElementSibling.lastElementChild;
+    if (nextSelect.tagName === 'SELECT') return nextSelect;
   }
 
-  axios.get(`/resources/products/${e.target.value}`)
-    .then(res => res.data)
-    .then(data => {
-      const option = document.createElement("option");
-      option.textContent = "Choose a model ...";
-      selectProduct.appendChild(option);
-
-      data.forEach((product) => {
-        const option = document.createElement("option");
-        option.setAttribute("value", product.productid);
-        option.textContent = product.name;
-        selectProduct.appendChild(option);
-      });
-    })
-})
-
-selectProduct.addEventListener("change", (e) => {
-  selectType.removeAttribute("disabled");
-
-  console.log(e)
-
-  while (selectType.firstChild) {
-    selectType.removeChild(selectType.firstChild);
+  // runs if it's the first element in the row
+  if (currentSelect.parentElement.parentElement.nextElementSibling) {
+    let grandParentElement = currentSelect.parentElement.parentElement.nextElementSibling;
+    return grandParentElement.firstElementChild.lastElementChild;
   }
 
-  axios.get(`/resources/types/${e.target.value}`)
-    .then(res => res.data)
-    .then(data => {
-      const option = document.createElement("option");
-      option.textContent = "Choose a type ...";
-      selectType.appendChild(option);
+  // runs if it's the last element in the column
+  let grandParentElement = currentSelect.parentElement.nextElementSibling.firstElementChild;
+  return grandParentElement.firstElementChild.lastElementChild;
+}
 
-      data.forEach((type) => {
-        const option = document.createElement("option");
-        option.setAttribute("value", type.typeid);
-        option.textContent = type.name;
-        selectType.appendChild(option);
-      });
-    })
-})
+function createOptionElements(data, parentElement) {
+  // wipes out every option except the default-option
+  clearEveryOptionExceptDefault(parentElement);
 
-selectProduct.addEventListener("change", (e) => {
-  selectType.removeAttribute("disabled");
+  data.forEach(childElement => {
+    // return a value which matches a database entity
+    let id = getCorrectIdFrom(parentElement, childElement);
 
-  console.log(e)
+    const option = document.createElement('option');
+    option.setAttribute('value', id);
+    option.textContent = childElement.name;
+    parentElement.appendChild(option);
+  });
+}
 
-  while (selectType.firstChild) {
-    selectType.removeChild(selectType.firstChild);
+function getCorrectIdFrom(parentElement, childElement) {
+  if (parentElement.name === 'categories') return childElement.categoryid;
+  if (parentElement.name === 'products') return childElement.productid;
+  if (parentElement.name === 'types') return childElement.typeid;
+  if (parentElement.name === 'heights') return childElement.heightid;
+  if (parentElement.name === 'lengths') return childElement.lengthid;
+}
+
+function removeDisabledAttributeFrom(select) {
+  const typeOfElement = select.tagName;
+
+  if (typeOfElement === 'SELECT') {
+    select.removeAttribute('disabled');
   }
+}
 
-  axios.get(`/resources/types/${e.target.value}`)
-    .then(res => res.data)
-    .then(data => {
-      const option = document.createElement("option");
-      option.textContent = "Choose a type ...";
-      selectType.appendChild(option);
-
-      data.forEach((type) => {
-        const option = document.createElement("option");
-        option.setAttribute("value", type.typeid);
-        option.textContent = type.name;
-        selectType.appendChild(option);
-      });
-    })
-})
-
-// axios
-//   .post(
-//     "https://purmo-dop.webservice.pl/src//ajax/get-data.php?",
-//     "siteid=2&mode=1",
-//     config
-//   )
-//   .then((response) => {
-//     console.log(response.data.content.categories);
-//     response.data.content.categories.forEach((radiator) => {
-//       const option = document.createElement("option");
-//       option.setAttribute("value", radiator.id);
-//       option.textContent = radiator.name;
-//       selectCategory.appendChild(option);
-//     });
-//   });
-
-// selectCategory.addEventListener("change", (e) => {
-//   selectProduct.removeAttribute("disabled");
-
-//   while (selectProduct.firstChild) {
-//     selectProduct.removeChild(selectProduct.firstChild);
-//   }
-
-//   categoryId = e.target.value;
-//   axios
-//     .post(
-//       "https://purmo-dop.webservice.pl/src//ajax/get-data.php?",
-//       `siteid=2&mode=1&categoryid=${categoryId}`,
-//       config
-//     )
-//     .then((response) => {
-//       console.log(response.data.content.products);
-//       const option = document.createElement("option");
-//       option.textContent = "Choose a model ...";
-//       selectProduct.appendChild(option);
-
-//       response.data.content.products.forEach((product) => {
-//         const option = document.createElement("option");
-//         option.setAttribute("value", product.id);
-//         option.textContent = product.name;
-//         selectProduct.appendChild(option);
-//       });
-//     });
-// });
-
-// selectProduct.addEventListener("change", (e) => {
-//   selectType.removeAttribute("disabled");
-
-//   while (selectType.firstChild) {
-//     selectType.removeChild(selectType.firstChild);
-//   }
-
-//   productId = e.target.value;
-//   axios
-//     .post(
-//       "https://purmo-dop.webservice.pl/src//ajax/get-data.php?",
-//       `siteid=2&mode=1&categoryid=${categoryId}&productid=${productId}`,
-//       config
-//     )
-//     .then((response) => {
-//       console.log(response.data.content.types);
-//       const option = document.createElement("option");
-//       option.textContent = "Choose the type ...";
-//       selectType.appendChild(option);
-
-//       response.data.content.types.forEach((type) => {
-//         const option = document.createElement("option");
-//         option.setAttribute("value", type.id);
-//         option.textContent = type.name;
-//         selectType.appendChild(option);
-//       });
-//     });
-// });
+function pageInitializer() {
+  axios.get('/resources/categories')
+    .then(res => createOptionElements(res.data, selects[0]))
+    .catch(err => console.log(err));
+}

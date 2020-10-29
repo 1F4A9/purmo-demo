@@ -32,23 +32,23 @@
     <form name="dop-select-number-form" id="dop-select-number-form" method="post" novalidate="novalidate">
 
       <div class="form-group">
-        <label class="label" for="category">Product group</label>
-        <select id="category" name="category" class="form-control form-control-lg select__category">
-          <option value="test">Select the product group ...</option>
+        <label class="label" for="categories">Product group</label>
+        <select id="categories" name="categories" class="form-control form-control-lg select__category">
+          <option value="default">Select the product group ...</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label class="label" for="category">Radiator model</label>
-        <select id="category" name="category" class="form-control form-control-lg select__product" disabled="disabled">
-          <option value="test">Choose a model ...</option>
+        <label class="label" for="products">Radiator model</label>
+        <select id="products" name="products" class="form-control form-control-lg select__product" disabled="disabled">
+          <option value="default">Choose a model ...</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label class="label" for="category">Radiator type</label>
-        <select id="category" name="category" class="form-control form-control-lg select__type" disabled="disabled">
-          <option value="test">Choose the type ...</option>
+        <label class="label" for="types">Radiator type</label>
+        <select id="types" name="types" class="form-control form-control-lg select__type" disabled="disabled">
+          <option value="default">Choose the type ...</option>
         </select>
       </div>
 
@@ -60,8 +60,8 @@
                 <font style="vertical-align: inherit;">Radiator height</font>
               </font>
             </label>
-            <select name="height" id="height" class="form-control form-control-lg" disabled="disabled">
-              <option value="">
+            <select name="heights" id="heights" class="form-control form-control-lg select__height" disabled="disabled">
+              <option value="default">
                 <font style="vertical-align: inherit;">
                   <font style="vertical-align: inherit;">Choose the radiator height ...</font>
                 </font>
@@ -77,8 +77,8 @@
                 <font style="vertical-align: inherit;">Radiator length</font>
               </font>
             </label>
-            <select name="length" id="length" class="form-control form-control-lg" disabled="disabled">
-              <option value="">
+            <select name="lengths" id="lengths" class="form-control form-control-lg select__length" disabled="disabled">
+              <option value="default">
                 <font style="vertical-align: inherit;">
                   <font style="vertical-align: inherit;">Choose the radiator length ...</font>
                 </font>
@@ -157,11 +157,11 @@
 
 
   <!-- <select class="select__category">
-    <option value="test">test</option>
+    <option value="default">default</option>
   </select>
   ​
   <select class="select__product" disabled>
-    <option value="test">test</option>
+    <option value="default">default</option>
   </select> -->
 </body>
 
