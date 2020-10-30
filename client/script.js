@@ -18,22 +18,31 @@ function HandleSelectChange(e) {
   const id = currentSelect.value;
 
   removeDisabledAttributeFrom(nextSelect);
-  revertIfDefaultOptionIsChosen(currentSelect);
+  revertIfDefaultOptionIsChosenOn(currentSelect);
 
   // if default option is chosen, won't call axios
   if (currentSelect.value === 'default') return;
 
   axios.get(`/resources/${endpoint}/${id}`)
-    .then(res => createOptionElements(res.data, nextSelect))
+    .then(res => {
+      createOptionElements(res.data, nextSelect);
+      revertIfDefaultOptionIsChosenOn(nextSelect);
+    })
     .catch(err => console.log(err));
 }
 
-function revertIfDefaultOptionIsChosen(currentSelect) {
-  if (currentSelect.value !== 'default') return;
+function pageInitializer() {
+  axios.get('/resources/categories')
+    .then(res => createOptionElements(res.data, selects[0]))
+    .catch(err => console.log(err));
+}
+
+function revertIfDefaultOptionIsChosenOn(select) {
+  if (select.value !== 'default') return;
 
   let selectedIndex = null;
   for (let i = 0; i < selects.length; i++) {
-    if (selects[i].id === currentSelect.id) {
+    if (selects[i].id === select.id) {
       selectedIndex = i;
     }
 
@@ -97,10 +106,4 @@ function removeDisabledAttributeFrom(select) {
   if (typeOfElement === 'SELECT') {
     select.removeAttribute('disabled');
   }
-}
-
-function pageInitializer() {
-  axios.get('/resources/categories')
-    .then(res => createOptionElements(res.data, selects[0]))
-    .catch(err => console.log(err));
 }
